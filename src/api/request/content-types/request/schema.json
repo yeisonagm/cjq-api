@@ -1,0 +1,56 @@
+{
+  "kind": "collectionType",
+  "collectionName": "requests",
+  "info": {
+    "singularName": "request",
+    "pluralName": "requests",
+    "displayName": "Request",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "area": {
+      "type": "string",
+      "required": true,
+      "minLength": 2
+    },
+    "date": {
+      "type": "datetime",
+      "required": true
+    },
+    "manager": {
+      "type": "string",
+      "required": true
+    },
+    "nameEquipment": {
+      "type": "string",
+      "required": true,
+      "minLength": 2
+    },
+    "serial": {
+      "type": "string",
+      "minLength": 6,
+      "required": true
+    },
+    "locationEquipment": {
+      "type": "string",
+      "required": true,
+      "minLength": 3
+    },
+    "maintenanceDescription": {
+      "type": "text",
+      "required": true,
+      "minLength": 3
+    },
+    "equipmentArea": {
+      "type": "enumeration",
+      "enum": [
+        "Superficie",
+        "Socavón"
+      ],
+      "required": true
+    }
+  }
+}
