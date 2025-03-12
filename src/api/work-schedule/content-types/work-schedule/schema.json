@@ -1,0 +1,39 @@
+{
+  "kind": "collectionType",
+  "collectionName": "work_schedules",
+  "info": {
+    "singularName": "work-schedule",
+    "pluralName": "work-schedules",
+    "displayName": "workSchedule"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "name": {
+      "type": "string",
+      "minLength": 2,
+      "required": true
+    },
+    "workDays": {
+      "type": "integer",
+      "required": true,
+      "default": 5
+    },
+    "restDays": {
+      "type": "integer",
+      "required": true,
+      "default": 2
+    },
+    "dailyHours": {
+      "type": "decimal",
+      "required": true,
+      "default": 4
+    },
+    "state": {
+      "type": "boolean",
+      "default": true,
+      "required": true
+    }
+  }
+}
