@@ -1,0 +1,86 @@
+{
+  "kind": "collectionType",
+  "collectionName": "equipments",
+  "info": {
+    "singularName": "equipment",
+    "pluralName": "equipments",
+    "displayName": "Equipment",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "unitCode": {
+      "type": "string",
+      "required": true,
+      "minLength": 3
+    },
+    "licensePlate": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "type": {
+      "type": "string",
+      "required": true
+    },
+    "brand": {
+      "type": "string",
+      "required": true
+    },
+    "model": {
+      "type": "string",
+      "required": true,
+      "minLength": 2
+    },
+    "year": {
+      "type": "string",
+      "required": true
+    },
+    "serialNumber": {
+      "type": "string",
+      "required": true
+    },
+    "engineNumber": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "grossWeight": {
+      "type": "decimal"
+    },
+    "netWeight": {
+      "type": "decimal",
+      "required": true
+    },
+    "color": {
+      "type": "string",
+      "required": true,
+      "minLength": 3
+    },
+    "power": {
+      "type": "string",
+      "required": true
+    },
+    "bodyType": {
+      "type": "string",
+      "required": true,
+      "minLength": 2
+    },
+    "state": {
+      "type": "enumeration",
+      "enum": [
+        "Nuevo",
+        "Malogrado",
+        "Reparación",
+        "Otro"
+      ],
+      "required": true
+    },
+    "entryDate": {
+      "type": "date",
+      "required": true
+    }
+  }
+}

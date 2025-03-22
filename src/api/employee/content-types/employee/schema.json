@@ -41,6 +41,18 @@
       "type": "string",
       "required": true,
       "minLength": 8
+    },
+    "contracts": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::contract.contract",
+      "mappedBy": "employeeId"
+    },
+    "medical_exams": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::medical-exam.medical-exam",
+      "mappedBy": "employee"
     }
   }
 }

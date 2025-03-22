@@ -1,0 +1,48 @@
+{
+  "kind": "collectionType",
+  "collectionName": "equipment_documents",
+  "info": {
+    "singularName": "equipment-document",
+    "pluralName": "equipment-documents",
+    "displayName": "EquipmentDocument",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "documentNumber": {
+      "type": "string",
+      "required": true,
+      "unique": true,
+      "minLength": 4
+    },
+    "issueDate": {
+      "type": "date",
+      "required": true
+    },
+    "expiryDate": {
+      "type": "date",
+      "required": true
+    },
+    "company": {
+      "type": "string",
+      "required": true,
+      "minLength": 2
+    },
+    "state": {
+      "type": "enumeration",
+      "enum": [
+        "Activo",
+        "Expirado",
+        "En proceso",
+        "Otro"
+      ],
+      "required": true
+    },
+    "observations": {
+      "type": "text",
+      "required": false
+    }
+  }
+}

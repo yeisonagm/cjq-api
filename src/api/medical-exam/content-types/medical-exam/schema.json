@@ -1,0 +1,56 @@
+{
+  "kind": "collectionType",
+  "collectionName": "medical_exams",
+  "info": {
+    "singularName": "medical-exam",
+    "pluralName": "medical-exams",
+    "displayName": "MedicalExam",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "employee": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::employee.employee",
+      "inversedBy": "medical_exams"
+    },
+    "examType": {
+      "type": "enumeration",
+      "enum": [
+        "Psicológico",
+        "Físico",
+        "Conocimientos",
+        "Otro"
+      ],
+      "required": true
+    },
+    "scheduledDate": {
+      "type": "datetime",
+      "required": true
+    },
+    "completionDate": {
+      "type": "datetime",
+      "required": true
+    },
+    "result": {
+      "type": "string",
+      "required": true,
+      "minLength": 3
+    },
+    "observation": {
+      "type": "text",
+      "required": true
+    },
+    "validUntil": {
+      "type": "date",
+      "required": true
+    },
+    "state": {
+      "type": "boolean",
+      "required": true
+    }
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "kind": "collectionType",
+  "collectionName": "documen_types",
+  "info": {
+    "singularName": "documen-type",
+    "pluralName": "documen-types",
+    "displayName": "documenType"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true,
+      "unique": true,
+      "minLength": 3
+    },
+    "description": {
+      "type": "text",
+      "required": true,
+      "minLength": 5
+    },
+    "validityPeriodMonths": {
+      "type": "integer",
+      "required": true,
+      "min": 1
+    },
+    "alertDaysBefore": {
+      "type": "integer",
+      "required": true,
+      "min": 2
+    },
+    "state": {
+      "type": "boolean",
+      "default": true,
+      "required": true
+    }
+  }
+}

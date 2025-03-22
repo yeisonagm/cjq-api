@@ -1,0 +1,58 @@
+{
+  "kind": "collectionType",
+  "collectionName": "contracts",
+  "info": {
+    "singularName": "contract",
+    "pluralName": "contracts",
+    "displayName": "Contract",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "startDate": {
+      "type": "date",
+      "required": true
+    },
+    "endDate": {
+      "type": "date",
+      "required": true
+    },
+    "salary": {
+      "type": "decimal",
+      "required": true,
+      "default": 0,
+      "min": 0
+    },
+    "state": {
+      "type": "enumeration",
+      "enum": [
+        "Activo",
+        "Inactivo",
+        "Licencia",
+        "Vacaciones"
+      ],
+      "required": true,
+      "default": "Activo"
+    },
+    "description": {
+      "type": "text",
+      "required": true
+    },
+    "document": {
+      "type": "media",
+      "multiple": true,
+      "required": false,
+      "allowedTypes": [
+        "files"
+      ]
+    },
+    "employeeId": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::employee.employee",
+      "inversedBy": "contracts"
+    }
+  }
+}

@@ -369,6 +369,173 @@ export interface AdminUser extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiBrancheBranche extends Struct.CollectionTypeSchema {
+  collectionName: 'branches';
+  info: {
+    description: '';
+    displayName: 'branche';
+    pluralName: 'branches';
+    singularName: 'branche';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    address: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        minLength: 3;
+      }>;
+    city: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        minLength: 3;
+      }>;
+    code: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 8;
+        minLength: 6;
+      }>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::branche.branche'
+    > &
+      Schema.Attribute.Private;
+    name: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        minLength: 3;
+      }>;
+    phone: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 10;
+        minLength: 9;
+      }>;
+    publishedAt: Schema.Attribute.DateTime;
+    state: Schema.Attribute.Enumeration<
+      ['Funcionamiento', 'Inabilitado', 'Etc']
+    > &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'Funcionamiento'>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiContractContract extends Struct.CollectionTypeSchema {
+  collectionName: 'contracts';
+  info: {
+    description: '';
+    displayName: 'Contract';
+    pluralName: 'contracts';
+    singularName: 'contract';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    description: Schema.Attribute.Text & Schema.Attribute.Required;
+    document: Schema.Attribute.Media<'files', true>;
+    employeeId: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::employee.employee'
+    >;
+    endDate: Schema.Attribute.Date & Schema.Attribute.Required;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::contract.contract'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    salary: Schema.Attribute.Decimal &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMax<
+        {
+          min: 0;
+        },
+        number
+      > &
+      Schema.Attribute.DefaultTo<0>;
+    startDate: Schema.Attribute.Date & Schema.Attribute.Required;
+    state: Schema.Attribute.Enumeration<
+      ['Activo', 'Inactivo', 'Licencia', 'Vacaciones']
+    > &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'Activo'>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiDocumenTypeDocumenType extends Struct.CollectionTypeSchema {
+  collectionName: 'documen_types';
+  info: {
+    displayName: 'documenType';
+    pluralName: 'documen-types';
+    singularName: 'documen-type';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    alertDaysBefore: Schema.Attribute.Integer &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMax<
+        {
+          min: 2;
+        },
+        number
+      >;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    description: Schema.Attribute.Text &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        minLength: 5;
+      }>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::documen-type.documen-type'
+    > &
+      Schema.Attribute.Private;
+    name: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique &
+      Schema.Attribute.SetMinMaxLength<{
+        minLength: 3;
+      }>;
+    publishedAt: Schema.Attribute.DateTime;
+    state: Schema.Attribute.Boolean &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<true>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    validityPeriodMonths: Schema.Attribute.Integer &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMax<
+        {
+          min: 1;
+        },
+        number
+      >;
+  };
+}
+
 export interface ApiEmployeeEmployee extends Struct.CollectionTypeSchema {
   collectionName: 'employees';
   info: {
@@ -382,6 +549,7 @@ export interface ApiEmployeeEmployee extends Struct.CollectionTypeSchema {
   };
   attributes: {
     birthDate: Schema.Attribute.Date & Schema.Attribute.Required;
+    contracts: Schema.Attribute.Relation<'oneToMany', 'api::contract.contract'>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -410,6 +578,10 @@ export interface ApiEmployeeEmployee extends Struct.CollectionTypeSchema {
       'api::employee.employee'
     > &
       Schema.Attribute.Private;
+    medical_exams: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::medical-exam.medical-exam'
+    >;
     phone: Schema.Attribute.String &
       Schema.Attribute.Required &
       Schema.Attribute.SetMinMaxLength<{
@@ -419,6 +591,162 @@ export interface ApiEmployeeEmployee extends Struct.CollectionTypeSchema {
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+  };
+}
+
+export interface ApiEquipmentDocumentEquipmentDocument
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'equipment_documents';
+  info: {
+    description: '';
+    displayName: 'EquipmentDocument';
+    pluralName: 'equipment-documents';
+    singularName: 'equipment-document';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    company: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        minLength: 2;
+      }>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    documentNumber: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique &
+      Schema.Attribute.SetMinMaxLength<{
+        minLength: 4;
+      }>;
+    expiryDate: Schema.Attribute.Date & Schema.Attribute.Required;
+    issueDate: Schema.Attribute.Date & Schema.Attribute.Required;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::equipment-document.equipment-document'
+    > &
+      Schema.Attribute.Private;
+    observations: Schema.Attribute.Text;
+    publishedAt: Schema.Attribute.DateTime;
+    state: Schema.Attribute.Enumeration<
+      ['Activo', 'Expirado', 'En proceso', 'Otro']
+    > &
+      Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiEquipmentEquipment extends Struct.CollectionTypeSchema {
+  collectionName: 'equipments';
+  info: {
+    description: '';
+    displayName: 'Equipment';
+    pluralName: 'equipments';
+    singularName: 'equipment';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    bodyType: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        minLength: 2;
+      }>;
+    brand: Schema.Attribute.String & Schema.Attribute.Required;
+    color: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        minLength: 3;
+      }>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    engineNumber: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique;
+    entryDate: Schema.Attribute.Date & Schema.Attribute.Required;
+    grossWeight: Schema.Attribute.Decimal;
+    licensePlate: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::equipment.equipment'
+    > &
+      Schema.Attribute.Private;
+    model: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        minLength: 2;
+      }>;
+    netWeight: Schema.Attribute.Decimal & Schema.Attribute.Required;
+    power: Schema.Attribute.String & Schema.Attribute.Required;
+    publishedAt: Schema.Attribute.DateTime;
+    serialNumber: Schema.Attribute.String & Schema.Attribute.Required;
+    state: Schema.Attribute.Enumeration<
+      ['Nuevo', 'Malogrado', 'Reparaci\u00F3n', 'Otro']
+    > &
+      Schema.Attribute.Required;
+    type: Schema.Attribute.String & Schema.Attribute.Required;
+    unitCode: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        minLength: 3;
+      }>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    year: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
+export interface ApiMedicalExamMedicalExam extends Struct.CollectionTypeSchema {
+  collectionName: 'medical_exams';
+  info: {
+    description: '';
+    displayName: 'MedicalExam';
+    pluralName: 'medical-exams';
+    singularName: 'medical-exam';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    completionDate: Schema.Attribute.DateTime & Schema.Attribute.Required;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    employee: Schema.Attribute.Relation<'manyToOne', 'api::employee.employee'>;
+    examType: Schema.Attribute.Enumeration<
+      ['Psicol\u00F3gico', 'F\u00EDsico', 'Conocimientos', 'Otro']
+    > &
+      Schema.Attribute.Required;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::medical-exam.medical-exam'
+    > &
+      Schema.Attribute.Private;
+    observation: Schema.Attribute.Text & Schema.Attribute.Required;
+    publishedAt: Schema.Attribute.DateTime;
+    result: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        minLength: 3;
+      }>;
+    scheduledDate: Schema.Attribute.DateTime & Schema.Attribute.Required;
+    state: Schema.Attribute.Boolean & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    validUntil: Schema.Attribute.Date & Schema.Attribute.Required;
   };
 }
 
@@ -1072,7 +1400,13 @@ declare module '@strapi/strapi' {
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
+      'api::branche.branche': ApiBrancheBranche;
+      'api::contract.contract': ApiContractContract;
+      'api::documen-type.documen-type': ApiDocumenTypeDocumenType;
       'api::employee.employee': ApiEmployeeEmployee;
+      'api::equipment-document.equipment-document': ApiEquipmentDocumentEquipmentDocument;
+      'api::equipment.equipment': ApiEquipmentEquipment;
+      'api::medical-exam.medical-exam': ApiMedicalExamMedicalExam;
       'api::position.position': ApiPositionPosition;
       'api::request.request': ApiRequestRequest;
       'api::work-schedule.work-schedule': ApiWorkScheduleWorkSchedule;
